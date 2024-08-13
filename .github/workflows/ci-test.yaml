@@ -5,6 +5,7 @@ on:
     branches:
       - main
       - develop
+      - feature
     paths:
       - /mnt/c/Users/emman/desktop/MLOps-Zoomcamp/mlops-final-project
 
