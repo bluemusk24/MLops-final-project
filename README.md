@@ -823,7 +823,7 @@ git status
 git add .
 git commit -m 'update-commit'
 ```
-* Note: git init(create a git repo), ls -a, pre-commit install(install pre-commit hooks), git status, git add . , git commit -m 'initial commit', rm -rf git (this removes .git repo if it's not the root directory).
+* Note: rm -rf .git (this removes .git repo in the root directory), git init(create a git repo), ls -a, pre-commit install(install pre-commit hooks), git status, git add . , git commit -m 'initial commit'.
 
 #### Makefiles and make:
 
