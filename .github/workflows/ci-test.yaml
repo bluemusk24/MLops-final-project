@@ -1,0 +1,120 @@
+name: MLOps CI/CD
+
+on:
+  pull_request:
+    branches:
+      - main
+      - develop
+    paths:
+      - /mnt/c/Users/emman/desktop/MLOps-Zoomcamp/mlops-final-project
+
+env:
+    AWS_DEFAULT_REGION: us-east-1
+    AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+    AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3                        
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+
+    - name: Install dependencies
+      working-directory: /mnt/c/Users/emman/desktop/MLOps-Zoomcamp/mlops-final-project
+      run: |
+        conda create -n project-env python=3.11
+        conda activate project-env
+        pip install -r requirements.txt
+        
+
+    - name: Run unit tests
+      working-directory: /mnt/c/Users/emman/desktop/MLOps-Zoomcamp/mlops-final-project
+      run: |
+        pipenv install --dev pytest
+        pipenv run pytest unit_test/
+
+    - name: Run integration tests
+      working-directory: /mnt/c/Users/emman/desktop/MLOps-Zoomcamp/mlops-final-project
+      run: |
+        pipenv install --dev deepdiff
+        integration_test/./run.sh
+    
+    - name: Linting and Formatting
+      working-directory: /mnt/c/Users/emman/desktop/MLOps-Zoomcamp/mlops-final-project
+      run: |
+        pipenv install --dev pylint
+        pipenv install --dev black isort black[jupyter]
+        isort .
+        black .
+        pipenv run pylint --recursive=y .
+    
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v2
+      with:
+        aws-access-key-id: ${{ env.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ env.AWS_SECRET_ACCESS_KEY }}
+        aws-region: ${{ env.AWS_DEFAULT_REGION }}  # Specify your AWS region
+
+#  docker:
+#    runs-on: ubuntu-latest
+#    needs: build
+#
+#    steps:
+#    - name: Checkout code
+#      uses: actions/checkout@v3
+#
+##    - name: Log into Docker Hub
+#     uses: docker/login-action@v2
+#      with:
+#        username: ${{ secrets.DOCKER_USERNAME }}
+#        password: ${{ secrets.DOCKER_PASSWORD }}
+#
+#    - name: Build and push Docker image
+#      run: |
+#        docker build -t ${{ secrets.DOCKER_USERNAME }}/mlops-final-project:${{ github.sha }} -f dockerfile .
+#        docker push ${{ secrets.DOCKER_USERNAME }}/mlops-final-project:${{ github.sha }}
+
+#  train:
+#    runs-on: ubuntu-latest
+#    needs: docker
+
+#    steps:
+#    - name: Checkout code
+#      uses: actions/checkout@v3
+
+#    - name: Run training
+#      run: |
+#        docker run --rm ${{ secrets.DOCKER_USERNAME }}/mlops-final-project:${{ github.sha }} python scripts/train_model.py
+
+#  deploy:
+#    runs-on: ubuntu-latest
+#    needs: train
+
+#    steps:
+#    - name: Checkout code
+#      uses: actions/checkout@v3
+
+#    - name: Configure AWS credentials
+#      uses: aws-actions/configure-aws-credentials@v2
+#      with:
+#        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+#        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+#        aws-region: us-east-1  # Specify your AWS region
+
+#    - name: Update Kubeconfig
+#      run: |
+#        aws eks update-kubeconfig --name my-cluster
+
+#    - name: Deploy to EKS
+#      run: |
+#        kubectl apply -f k8s/deployment.yaml  # Update the path to your Kubernetes manifest
+
+
