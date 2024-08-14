@@ -833,6 +833,7 @@ git commit -m 'update-commit'
 make --version
 make publish
 ```
+* Gihub actions continuous integration and continuous deployment.
 
 ### Technology Used
 
@@ -843,7 +844,5 @@ make publish
 * Mage
 * Docker
 * Kind-Kubernetes
-
-
 
 [mlops_pics](<https://github.com/bluemusk24/mlops-final-project/blob/main/mlops%20project%20picx.png>)
