@@ -833,7 +833,7 @@ git commit -m 'update-commit'
 make --version
 make publish
 ```
-* Gihub actions continuous integration and continuous deployment.
+* Github actions continuous integration and continuous deployment.
 
 ### Technology Used
 
