@@ -655,6 +655,10 @@ python3 landmine_evidently.py
 [Evidently_pic2](https://github.com/bluemusk24/mlops-final-project/blob/main/06-monitoring/pic_evidently2.png)
 [Grafana_pic](https://github.com/bluemusk24/mlops-final-project/blob/main/06-monitoring/pic_grafana.png)
 
+#### Debugging with test suites and reports
+
+* I implement debugging to detect the time something goes run with our data and model, so we fix the problem.. Debugging is done via evidently dashboards. the debugging notebook is found here [debugging_landmine.ipynb]()
+
 
 ### 9. Best Practices
 
