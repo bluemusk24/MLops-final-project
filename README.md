@@ -657,7 +657,7 @@ python3 landmine_evidently.py
 
 #### Debugging with test suites and reports
 
-* I implement debugging to detect the time something goes run with our data and model, so we fix the problem.. Debugging is done via evidently dashboards. the debugging notebook is found here [debugging_landmine.ipynb]()
+* I implement debugging to detect the time something goes run with our data and model, so we fix the problem.. Debugging is done via evidently dashboards. the debugging notebook is found here [debugging_landmine.ipynb](https://github.com/bluemusk24/mlops-final-project/blob/main/06-monitoring/debugging_landmine.ipynb)
 
 
 ### 9. Best Practices
